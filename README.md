@@ -75,9 +75,10 @@ python manage.py test
 
 ## Documentación
 
-- Documento SRS: *agregar el enlace*
+- [Documento SRS](https://claude.ai/artifact/VtrafBi2XQCQyS7x4LoeuD)
 - Video de presentación: *agregar el enlace*
 
 ## Integrantes
 
-- *Por completar*
+- Beto
+- Mirllan
