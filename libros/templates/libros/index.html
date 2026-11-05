@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Géneros{% endblock %}
+{% block contenido %}
+<h1>Géneros</h1>
+{% if lista_generos %}
+    <ul class="tarjetas">
+    {% for genero in lista_generos %}
+        <li><a class="tarjeta" href="{% url 'genero' genero.id %}">
+            <strong>{{ genero.nombre }}</strong>
+            <span>{{ genero.total_libros }} libro{{ genero.total_libros|pluralize }}</span>
+        </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay géneros disponibles.</p>
+{% endif %}
+{% endblock %}

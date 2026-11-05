@@ -1,0 +1,184 @@
+[
+{
+  "model": "libros.genero",
+  "pk": 1,
+  "fields": {
+    "nombre": "Terror"
+  }
+},
+{
+  "model": "libros.genero",
+  "pk": 2,
+  "fields": {
+    "nombre": "Física"
+  }
+},
+{
+  "model": "libros.genero",
+  "pk": 3,
+  "fields": {
+    "nombre": "Ciencia ficción"
+  }
+},
+{
+  "model": "libros.genero",
+  "pk": 4,
+  "fields": {
+    "nombre": "Fantasía"
+  }
+},
+{
+  "model": "libros.genero",
+  "pk": 5,
+  "fields": {
+    "nombre": "Misterio"
+  }
+},
+{
+  "model": "libros.genero",
+  "pk": 6,
+  "fields": {
+    "nombre": "Romance"
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 1,
+  "fields": {
+    "titulo": "El Exorcista",
+    "autor": "William Peter Blatty",
+    "genero": 1,
+    "votos": 2
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 2,
+  "fields": {
+    "titulo": "It",
+    "autor": "Stephen King",
+    "genero": 1,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 3,
+  "fields": {
+    "titulo": "Drácula",
+    "autor": "Bram Stoker",
+    "genero": 1,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 4,
+  "fields": {
+    "titulo": "Cosmos",
+    "autor": "Carl Sagan",
+    "genero": 2,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 5,
+  "fields": {
+    "titulo": "Breve historia del tiempo",
+    "autor": "Stephen Hawking",
+    "genero": 2,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 6,
+  "fields": {
+    "titulo": "Dune",
+    "autor": "Frank Herbert",
+    "genero": 3,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 7,
+  "fields": {
+    "titulo": "Fundación",
+    "autor": "Isaac Asimov",
+    "genero": 3,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 8,
+  "fields": {
+    "titulo": "1984",
+    "autor": "George Orwell",
+    "genero": 3,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 9,
+  "fields": {
+    "titulo": "El Hobbit",
+    "autor": "J. R. R. Tolkien",
+    "genero": 4,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 10,
+  "fields": {
+    "titulo": "Harry Potter y la piedra filosofal",
+    "autor": "J. K. Rowling",
+    "genero": 4,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 11,
+  "fields": {
+    "titulo": "Asesinato en el Orient Express",
+    "autor": "Agatha Christie",
+    "genero": 5,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 12,
+  "fields": {
+    "titulo": "El código Da Vinci",
+    "autor": "Dan Brown",
+    "genero": 5,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 13,
+  "fields": {
+    "titulo": "Orgullo y prejuicio",
+    "autor": "Jane Austen",
+    "genero": 6,
+    "votos": 0
+  }
+},
+{
+  "model": "libros.libro",
+  "pk": 14,
+  "fields": {
+    "titulo": "Romeo y Julieta",
+    "autor": "William Shakespeare",
+    "genero": 6,
+    "votos": 0
+  }
+}
+]

@@ -1,0 +1,23 @@
+{% load static %}<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}Catálogo{% endblock %} · Biblioteca Inteligente</title>
+    <link rel="stylesheet" href="{% static 'libros/estilos.css' %}">
+</head>
+<body>
+    <header class="barra">
+        <div class="contenedor barra-interior">
+            <a class="marca" href="{% url 'index' %}">Biblioteca Inteligente</a>
+            <a class="boton" href="{% url 'crear' %}">Agregar libro</a>
+        </div>
+    </header>
+    <main class="contenedor">
+        {% for message in messages %}
+            <p class="aviso" role="status">{{ message }}</p>
+        {% endfor %}
+        {% block contenido %}{% endblock %}
+    </main>
+</body>
+</html>

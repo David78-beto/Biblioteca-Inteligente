@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block titulo %}Página no encontrada{% endblock %}
+{% block contenido %}
+<h1>Página no encontrada</h1>
+<p>El libro o el género que buscas no existe o fue eliminado.</p>
+<a href="{% url 'index' %}">Volver al catálogo</a>
+{% endblock %}

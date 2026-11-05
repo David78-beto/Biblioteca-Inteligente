@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block titulo %}{{ libro.titulo }}{% endblock %}
+{% block contenido %}
+<a class="volver" href="{% url 'genero' libro.genero.id %}">← {{ libro.genero.nombre }}</a>
+<h1>{{ libro.titulo }}</h1>
+<dl class="datos">
+    <dt>Autor</dt><dd>{{ libro.autor }}</dd>
+    <dt>Género</dt><dd>{{ libro.genero.nombre }}</dd>
+    <dt>Votos</dt><dd>{{ libro.votos }}</dd>
+</dl>
+<div class="acciones">
+    <form action="{% url 'votar' libro.id %}" method="post">
+        {% csrf_token %}
+        <button class="boton" type="submit">Me gusta</button>
+    </form>
+    <a class="boton secundario" href="{% url 'editar' libro.id %}">Editar</a>
+    <a class="boton peligro" href="{% url 'eliminar' libro.id %}">Eliminar</a>
+</div>
+{% endblock %}
