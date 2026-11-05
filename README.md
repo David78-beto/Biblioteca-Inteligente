@@ -75,10 +75,10 @@ python manage.py test
 
 ## Documentación
 
-- [Documento SRS](https://claude.ai/artifact/VtrafBi2XQCQyS7x4LoeuD)
+- [Documento SRS (PDF)](docs/SRS-Biblioteca-Inteligente.pdf)
 - Video de presentación: *agregar el enlace*
 
 ## Integrantes
 
-- Beto
-- Mirllan
+- David Humberto Mahecha Cardozo
+- Edilson Mirllan Suarez Gutiérrez
