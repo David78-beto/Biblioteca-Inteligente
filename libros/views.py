@@ -11,7 +11,8 @@ from .roles import LECTOR
 
 
 def index(request):
-    lista_generos = Genero.objects.annotate(total_libros=Count('libro'))
+    # Meta.ordering is ignored in aggregation queries, so order explicitly.
+    lista_generos = Genero.objects.annotate(total_libros=Count('libro')).order_by('nombre')
     return render(request, 'libros/index.html', {"lista_generos": lista_generos})
 
 

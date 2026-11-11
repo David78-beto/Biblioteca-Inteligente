@@ -15,7 +15,7 @@ Proyecto de la asignatura Electiva V. Estado: Entrega 2, núcleo funcional.
 | Roles Lector, Bibliotecario y Administrador | Construido |
 | Un voto por usuario y libro | Construido |
 | Panel de administración de Django | Construido |
-| 31 pruebas automatizadas con GitHub Actions | Construido |
+| 32 pruebas automatizadas con GitHub Actions | Construido |
 | Contenedor Docker con Gunicorn y WhiteNoise | Construido |
 | Despliegue en Render con PostgreSQL | Publicado |
 | Docker Compose con Django y PostgreSQL | Configurado |

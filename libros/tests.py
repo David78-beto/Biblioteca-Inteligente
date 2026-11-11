@@ -30,6 +30,11 @@ class ConsultaTests(BaseTestCase):
         self.assertContains(response, 'Terror')
         self.assertEqual(response.context['lista_generos'].get(pk=self.terror.pk).total_libros, 1)
 
+    def test_index_ordena_generos_alfabeticamente(self):
+        response = self.client.get(reverse('index'))
+        nombres = [g.nombre for g in response.context['lista_generos']]
+        self.assertEqual(nombres, ['Fantasía', 'Terror'])
+
     def test_genero_muestra_solo_sus_libros(self):
         response = self.client.get(reverse('genero', args=[self.terror.pk]))
         self.assertContains(response, 'Drácula')
