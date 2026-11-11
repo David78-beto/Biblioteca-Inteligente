@@ -1,184 +1,198 @@
 [
-{
-  "model": "libros.genero",
-  "pk": 1,
-  "fields": {
-    "nombre": "Terror"
+  {
+    "model": "libros.genero",
+    "pk": 1,
+    "fields": {
+      "nombre": "Terror"
+    }
+  },
+  {
+    "model": "libros.genero",
+    "pk": 2,
+    "fields": {
+      "nombre": "Física"
+    }
+  },
+  {
+    "model": "libros.genero",
+    "pk": 3,
+    "fields": {
+      "nombre": "Ciencia ficción"
+    }
+  },
+  {
+    "model": "libros.genero",
+    "pk": 4,
+    "fields": {
+      "nombre": "Fantasía"
+    }
+  },
+  {
+    "model": "libros.genero",
+    "pk": 5,
+    "fields": {
+      "nombre": "Misterio"
+    }
+  },
+  {
+    "model": "libros.genero",
+    "pk": 6,
+    "fields": {
+      "nombre": "Romance"
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 1,
+    "fields": {
+      "titulo": "El Exorcista",
+      "autor": "William Peter Blatty",
+      "genero": 1,
+      "votos": 0,
+      "descripcion": "Una madre busca ayuda cuando su hija de doce años empieza a comportarse de forma inexplicable, y dos sacerdotes se enfrentan a una posesión demoníaca."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 2,
+    "fields": {
+      "titulo": "It",
+      "autor": "Stephen King",
+      "genero": 1,
+      "votos": 0,
+      "descripcion": "Un grupo de amigos de un pueblo de Maine se enfrenta, de niños y de adultos, a una criatura que adopta la forma de un payaso."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 3,
+    "fields": {
+      "titulo": "Drácula",
+      "autor": "Bram Stoker",
+      "genero": 1,
+      "votos": 0,
+      "descripcion": "A través de cartas y diarios, varios personajes descubren y persiguen a un conde de Transilvania que se alimenta de sangre humana."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 4,
+    "fields": {
+      "titulo": "Cosmos",
+      "autor": "Carl Sagan",
+      "genero": 2,
+      "votos": 0,
+      "descripcion": "Recorrido divulgativo por la historia del universo, la astronomía y el lugar de la humanidad en el cosmos."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 5,
+    "fields": {
+      "titulo": "Breve historia del tiempo",
+      "autor": "Stephen Hawking",
+      "genero": 2,
+      "votos": 0,
+      "descripcion": "Explica de forma accesible el origen del universo, los agujeros negros y la naturaleza del tiempo."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 6,
+    "fields": {
+      "titulo": "Dune",
+      "autor": "Frank Herbert",
+      "genero": 3,
+      "votos": 0,
+      "descripcion": "En el planeta desértico Arrakis, único productor de una valiosa especia, un joven heredero queda en medio de una lucha por el poder."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 7,
+    "fields": {
+      "titulo": "Fundación",
+      "autor": "Isaac Asimov",
+      "genero": 3,
+      "votos": 0,
+      "descripcion": "Un matemático prevé la caída de un imperio galáctico y crea una fundación para acortar la era de oscuridad que vendrá."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 8,
+    "fields": {
+      "titulo": "1984",
+      "autor": "George Orwell",
+      "genero": 3,
+      "votos": 0,
+      "descripcion": "En un estado totalitario que vigila cada paso de sus ciudadanos, un funcionario empieza a rebelarse contra el Partido."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 9,
+    "fields": {
+      "titulo": "El Hobbit",
+      "autor": "J. R. R. Tolkien",
+      "genero": 4,
+      "votos": 0,
+      "descripcion": "Un hobbit tranquilo se une a un mago y a un grupo de enanos en un viaje para recuperar un tesoro custodiado por un dragón."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 10,
+    "fields": {
+      "titulo": "Harry Potter y la piedra filosofal",
+      "autor": "J. K. Rowling",
+      "genero": 4,
+      "votos": 0,
+      "descripcion": "Un niño descubre en su undécimo cumpleaños que es mago y empieza sus estudios en el colegio Hogwarts."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 11,
+    "fields": {
+      "titulo": "Asesinato en el Orient Express",
+      "autor": "Agatha Christie",
+      "genero": 5,
+      "votos": 0,
+      "descripcion": "El detective Hercule Poirot investiga un asesinato cometido en un tren detenido por la nieve."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 12,
+    "fields": {
+      "titulo": "El código Da Vinci",
+      "autor": "Dan Brown",
+      "genero": 5,
+      "votos": 0,
+      "descripcion": "Un profesor de simbología y una criptóloga siguen pistas ocultas en obras de arte tras un asesinato en el Louvre."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 13,
+    "fields": {
+      "titulo": "Orgullo y prejuicio",
+      "autor": "Jane Austen",
+      "genero": 6,
+      "votos": 0,
+      "descripcion": "Elizabeth Bennet y el señor Darcy superan sus primeras impresiones en la Inglaterra rural de principios del siglo XIX."
+    }
+  },
+  {
+    "model": "libros.libro",
+    "pk": 14,
+    "fields": {
+      "titulo": "Romeo y Julieta",
+      "autor": "William Shakespeare",
+      "genero": 6,
+      "votos": 0,
+      "descripcion": "Dos jóvenes de familias enemigas de Verona se enamoran, con consecuencias trágicas."
+    }
   }
-},
-{
-  "model": "libros.genero",
-  "pk": 2,
-  "fields": {
-    "nombre": "Física"
-  }
-},
-{
-  "model": "libros.genero",
-  "pk": 3,
-  "fields": {
-    "nombre": "Ciencia ficción"
-  }
-},
-{
-  "model": "libros.genero",
-  "pk": 4,
-  "fields": {
-    "nombre": "Fantasía"
-  }
-},
-{
-  "model": "libros.genero",
-  "pk": 5,
-  "fields": {
-    "nombre": "Misterio"
-  }
-},
-{
-  "model": "libros.genero",
-  "pk": 6,
-  "fields": {
-    "nombre": "Romance"
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 1,
-  "fields": {
-    "titulo": "El Exorcista",
-    "autor": "William Peter Blatty",
-    "genero": 1,
-    "votos": 2
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 2,
-  "fields": {
-    "titulo": "It",
-    "autor": "Stephen King",
-    "genero": 1,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 3,
-  "fields": {
-    "titulo": "Drácula",
-    "autor": "Bram Stoker",
-    "genero": 1,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 4,
-  "fields": {
-    "titulo": "Cosmos",
-    "autor": "Carl Sagan",
-    "genero": 2,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 5,
-  "fields": {
-    "titulo": "Breve historia del tiempo",
-    "autor": "Stephen Hawking",
-    "genero": 2,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 6,
-  "fields": {
-    "titulo": "Dune",
-    "autor": "Frank Herbert",
-    "genero": 3,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 7,
-  "fields": {
-    "titulo": "Fundación",
-    "autor": "Isaac Asimov",
-    "genero": 3,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 8,
-  "fields": {
-    "titulo": "1984",
-    "autor": "George Orwell",
-    "genero": 3,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 9,
-  "fields": {
-    "titulo": "El Hobbit",
-    "autor": "J. R. R. Tolkien",
-    "genero": 4,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 10,
-  "fields": {
-    "titulo": "Harry Potter y la piedra filosofal",
-    "autor": "J. K. Rowling",
-    "genero": 4,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 11,
-  "fields": {
-    "titulo": "Asesinato en el Orient Express",
-    "autor": "Agatha Christie",
-    "genero": 5,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 12,
-  "fields": {
-    "titulo": "El código Da Vinci",
-    "autor": "Dan Brown",
-    "genero": 5,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 13,
-  "fields": {
-    "titulo": "Orgullo y prejuicio",
-    "autor": "Jane Austen",
-    "genero": 6,
-    "votos": 0
-  }
-},
-{
-  "model": "libros.libro",
-  "pk": 14,
-  "fields": {
-    "titulo": "Romeo y Julieta",
-    "autor": "William Shakespeare",
-    "genero": 6,
-    "votos": 0
-  }
-}
 ]

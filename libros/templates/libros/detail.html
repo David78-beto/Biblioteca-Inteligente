@@ -8,12 +8,23 @@
     <dt>Género</dt><dd>{{ libro.genero.nombre }}</dd>
     <dt>Votos</dt><dd>{{ libro.votos }}</dd>
 </dl>
+{% if libro.descripcion %}<p class="descripcion">{{ libro.descripcion }}</p>{% endif %}
 <div class="acciones">
-    <form action="{% url 'votar' libro.id %}" method="post">
-        {% csrf_token %}
-        <button class="boton" type="submit">Me gusta</button>
-    </form>
-    <a class="boton secundario" href="{% url 'editar' libro.id %}">Editar</a>
-    <a class="boton peligro" href="{% url 'eliminar' libro.id %}">Eliminar</a>
+    {% if not user.is_authenticated %}
+        <a class="boton" href="{% url 'login' %}?next={{ request.path|urlencode }}">Inicia sesión para votar</a>
+    {% elif ya_voto %}
+        <button class="boton" type="button" disabled>Ya votaste</button>
+    {% else %}
+        <form action="{% url 'votar' libro.id %}" method="post">
+            {% csrf_token %}
+            <button class="boton" type="submit">Me gusta</button>
+        </form>
+    {% endif %}
+    {% if perms.libros.change_libro %}
+        <a class="boton secundario" href="{% url 'editar' libro.id %}">Editar</a>
+    {% endif %}
+    {% if perms.libros.delete_libro %}
+        <a class="boton peligro" href="{% url 'eliminar' libro.id %}">Eliminar</a>
+    {% endif %}
 </div>
 {% endblock %}

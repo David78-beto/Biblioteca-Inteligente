@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block titulo %}Acceso denegado{% endblock %}
+{% block contenido %}
+<h1>Acceso denegado</h1>
+<p>Tu rol no tiene permiso para hacer esta acción. Solo el Bibliotecario y el Administrador gestionan el catálogo.</p>
+<a href="{% url 'index' %}">Volver al catálogo</a>
+{% endblock %}

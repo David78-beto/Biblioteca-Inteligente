@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Registrarse{% endblock %}
+{% block contenido %}
+<h1>Crear cuenta</h1>
+<p>Las cuentas nuevas quedan como Lector: pueden consultar el catálogo y votar.</p>
+<form class="formulario" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="acciones">
+        <button class="boton" type="submit">Crear cuenta</button>
+        <a href="{% url 'login' %}">¿Ya tienes cuenta? Entra</a>
+    </div>
+</form>
+{% endblock %}

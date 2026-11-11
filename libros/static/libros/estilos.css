@@ -42,7 +42,14 @@ main.contenedor { padding-top: 24px; padding-bottom: 48px; }
 
 .barra { background: var(--superficie); border-bottom: 1px solid var(--borde); }
 .barra-interior { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.barra-interior { flex-wrap: wrap; padding: 12px 0; }
 .marca { color: var(--texto); font-weight: 700; text-decoration: none; }
+.menu { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.menu form { margin: 0; }
+.usuario { font-weight: 600; }
+.rol { margin-left: 4px; padding: 2px 8px; border-radius: 999px; background: var(--aviso); font-size: 0.8rem; font-weight: 400; }
+.descripcion { margin: 0 0 24px; }
+.boton:disabled { opacity: 0.6; cursor: default; }
 
 .boton {
     display: inline-block;
@@ -88,7 +95,7 @@ main.contenedor { padding-top: 24px; padding-bottom: 48px; }
 
 .formulario p { margin: 0 0 16px; }
 .formulario label { display: block; margin-bottom: 4px; font-weight: 600; }
-.formulario input, .formulario select {
+.formulario input, .formulario select, .formulario textarea {
     width: 100%;
     padding: 8px 12px;
     border: 1px solid var(--borde);
@@ -97,4 +104,5 @@ main.contenedor { padding-top: 24px; padding-bottom: 48px; }
     color: var(--texto);
     font: inherit;
 }
+.formulario .helptext, .formulario ul:not(.errorlist) { color: var(--tenue); font-size: 0.85rem; }
 .errorlist { margin: 0 0 4px; padding: 0; color: var(--peligro); font-size: 0.9rem; list-style: none; }
