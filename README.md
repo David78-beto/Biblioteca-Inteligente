@@ -4,7 +4,7 @@ Catálogo web de una biblioteca con registro de usuarios, roles y votos. En la E
 
 Proyecto de la asignatura Electiva V. Estado: Entrega 2, núcleo funcional.
 
-- **Aplicación publicada:** *agregar la URL de Render*
+- **Aplicación publicada:** <https://biblioteca-inteligente-glj7.onrender.com>
 
 ## Estado actual
 
@@ -17,7 +17,7 @@ Proyecto de la asignatura Electiva V. Estado: Entrega 2, núcleo funcional.
 | Panel de administración de Django | Construido |
 | 31 pruebas automatizadas con GitHub Actions | Construido |
 | Contenedor Docker con Gunicorn y WhiteNoise | Construido |
-| Despliegue en Render con PostgreSQL | Configurado |
+| Despliegue en Render con PostgreSQL | Publicado |
 | Docker Compose con Django y PostgreSQL | Configurado |
 | API REST, microservicio Node.js y Swagger | Entrega 3 |
 | Integración con IA generativa | Entrega 3 |
