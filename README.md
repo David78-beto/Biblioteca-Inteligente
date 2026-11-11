@@ -76,7 +76,7 @@ python manage.py test
 ## Documentación
 
 - [Documento SRS (PDF)](docs/SRS-Biblioteca-Inteligente.pdf)
-- Video de presentación: *agregar el enlace*
+- [Video de presentación](https://www.youtube.com/watch?v=1tX8ytETkqM)
 
 ## Integrantes
 
