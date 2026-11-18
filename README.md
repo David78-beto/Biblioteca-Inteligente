@@ -1,32 +1,31 @@
 # Biblioteca Inteligente
 
-Catálogo web de una biblioteca con registro de usuarios, roles y votos. En la Entrega 3 se suman un microservicio en Node.js y recomendaciones con inteligencia artificial generativa.
+Catálogo web de una biblioteca con usuarios, roles, votos en tiempo real, recomendaciones y búsqueda en lenguaje natural con inteligencia artificial generativa.
 
-Proyecto de la asignatura Electiva V. Estado: Entrega 2, núcleo funcional.
+Proyecto de la asignatura Electiva V. Estado: Entrega 3, integración de microservicios e IA.
 
 - **Aplicación publicada:** <https://biblioteca-inteligente-glj7.onrender.com>
+- **Swagger del microservicio:** *agregar la URL de Render seguida de `/docs/`*
 
 ## Estado actual
 
 | Parte | Estado |
 | --- | --- |
-| CRUD del catálogo en Django | Construido |
-| Registro, inicio y cierre de sesión | Construido |
-| Roles Lector, Bibliotecario y Administrador | Construido |
-| Un voto por usuario y libro | Construido |
+| CRUD del catálogo, registro, login y roles en Django | Construido |
 | Panel de administración de Django | Construido |
-| 32 pruebas automatizadas con GitHub Actions | Construido |
-| Contenedor Docker con Gunicorn y WhiteNoise | Construido |
-| Despliegue en Render con PostgreSQL | Publicado |
-| Docker Compose con Django y PostgreSQL | Configurado |
-| API REST, microservicio Node.js y Swagger | Entrega 3 |
-| Integración con IA generativa | Entrega 3 |
+| API REST del catálogo (`/api/libros/`) | Construido |
+| Microservicio Node.js con Express y Socket.IO | Construido |
+| Documentación pública con Swagger/OpenAPI | Construido |
+| Recomendaciones y búsqueda con Google Gemini | Construido |
+| Votos y avisos en tiempo real | Construido |
+| Docker Compose con Django, Node.js y PostgreSQL | Construido |
+| 58 pruebas automatizadas con GitHub Actions | Construido |
 
 ## Roles
 
 | Rol | Puede |
 | --- | --- |
-| Visitante | Ver géneros, libros y su detalle |
+| Visitante | Ver el catálogo, recibir recomendaciones y buscar con IA |
 | Lector | Lo anterior y votar una vez por libro. Toda cuenta nueva queda como Lector |
 | Bibliotecario | Lo anterior y agregar, editar y eliminar libros. Lo asigna el Administrador en el panel |
 | Administrador | Todo, incluido el panel de Django en `/admin/` |
@@ -35,15 +34,39 @@ Proyecto de la asignatura Electiva V. Estado: Entrega 2, núcleo funcional.
 
 ![Diagrama de componentes](docs/arquitectura.png)
 
-Los recuadros punteados se construyen en la Entrega 3. El detalle de la arquitectura está en el SRS.
+| Servicio | Carpeta | Puerto local | Responsabilidad |
+| --- | --- | --- | --- |
+| `web` | raíz del proyecto | 8000 | Django: interfaz, usuarios, roles y API REST |
+| `microservicio` | `microservicio/` | 3000 | Node.js: IA generativa, Swagger y eventos en vivo |
+| `db` | imagen `postgres:17` | interno | PostgreSQL |
 
-## Ejecución local
+## API del microservicio
+
+La documentación interactiva está en `/docs/` y el documento OpenAPI en `/openapi.json`.
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| `GET` | `/health` | Estado del microservicio |
+| `POST` | `/api/recomendaciones` | Recomienda libros parecidos con IA |
+| `POST` | `/api/busqueda` | Busca libros con una frase en lenguaje natural |
+| `POST` | `/api/eventos/voto` | Django publica un voto (requiere token) |
+| `POST` | `/api/eventos/libro` | Django publica un libro nuevo (requiere token) |
+
+## Ejecución con Docker Compose
+
+Requiere Docker Desktop y una clave de [Google AI Studio](https://aistudio.google.com/apikey).
+
+1. Copia `.env.example` como `.env`.
+2. Cambia las claves y pega tu `GEMINI_API_KEY`.
+3. Levanta los servicios:
 
 ```bash
-python -m venv venv
+docker compose up --build
 ```
 
-Activa el entorno. En Windows usa `venv\Scripts\activate`; en Linux o macOS usa `source venv/bin/activate`.
+La aplicación queda en <http://localhost:8000/> y Swagger en <http://localhost:3000/docs/>.
+
+## Ejecución local sin Docker
 
 ```bash
 pip install -r requirements.txt
@@ -58,32 +81,19 @@ python manage.py cargar_catalogo_inicial
 ```
 
 ```bash
-python manage.py createsuperuser
-```
-
-```bash
 python manage.py runserver
 ```
 
-La aplicación queda en <http://127.0.0.1:8000/>. Para crear un Bibliotecario, entra a `/admin/` con el superusuario, abre el usuario y agrégalo al grupo **Bibliotecario**.
-
-## Ejecución con Docker
-
-Copia `.env.example` como `.env`, cambia las claves y ejecuta:
-
-```bash
-docker compose up --build
-```
-
-Al arrancar, el contenedor aplica las migraciones, carga el catálogo si la base está vacía y crea el superusuario definido en `.env`.
+Sin las variables `NODE_SERVICE_URL` y `NODE_PUBLIC_URL`, Django funciona igual y oculta las funciones de IA.
 
 ## Despliegue en Render
 
-El archivo [render.yaml](render.yaml) crea el servicio web desde el `Dockerfile` y una base de datos PostgreSQL gratuita.
+El archivo [render.yaml](render.yaml) define Django, el microservicio y PostgreSQL. Cada envío a la rama `main` publica una nueva versión. Estas variables se escriben en el panel de Render:
 
-1. En Render, elige **New → Blueprint** y conecta este repositorio.
-2. Escribe `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL` y `DJANGO_SUPERUSER_PASSWORD` cuando Render los pida.
-3. Cada envío a la rama `main` publica una nueva versión.
+| Servicio | Variable | Valor |
+| --- | --- | --- |
+| `biblioteca-microservicio` | `GEMINI_API_KEY` | Clave de Google AI Studio |
+| `biblioteca-inteligente` | `NODE_SERVICE_URL` | URL pública del microservicio |
 
 ## Ramas
 
@@ -96,11 +106,16 @@ El archivo [render.yaml](render.yaml) crea el servicio web desde el `Dockerfile`
 python manage.py test
 ```
 
+```bash
+npm --prefix microservicio test
+```
+
 ## Documentación
 
 - [Documento SRS (PDF)](docs/SRS-Biblioteca-Inteligente.pdf)
 - [Video Entrega 1](https://www.youtube.com/watch?v=1tX8ytETkqM)
 - Video Entrega 2: *agregar el enlace*
+- Video Entrega 3: *agregar el enlace*
 
 ## Integrantes
 
