@@ -5,7 +5,8 @@ Catálogo web de una biblioteca con usuarios, roles, votos en tiempo real, recom
 Proyecto de la asignatura Electiva V. Estado: Entrega 3, integración de microservicios e IA.
 
 - **Aplicación publicada:** <https://biblioteca-inteligente-glj7.onrender.com>
-- **Swagger del microservicio:** *agregar la URL de Render seguida de `/docs/`*
+- **Microservicio:** <https://biblioteca-microservicio-idfw.onrender.com>
+- **Swagger:** <https://biblioteca-microservicio-idfw.onrender.com/docs/>
 
 ## Estado actual
 
