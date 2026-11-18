@@ -21,6 +21,10 @@ Proyecto de la asignatura Electiva V. Estado: Entrega 3, integración de microse
 | Docker Compose con Django, Node.js y PostgreSQL | Construido |
 | 58 pruebas automatizadas con GitHub Actions | Construido |
 
+## Pendiente para ExpoUninpahu
+
+- **Lectura en línea (RF-18):** desde cada libro se podrá abrir una copia legal cuando la obra sea de dominio público, o ver dónde conseguirla si tiene derechos de autor. El sistema no alojará archivos PDF.
+
 ## Roles
 
 | Rol | Puede |
@@ -114,7 +118,7 @@ npm --prefix microservicio test
 
 - [Documento SRS (PDF)](docs/SRS-Biblioteca-Inteligente.pdf)
 - [Video Entrega 1](https://www.youtube.com/watch?v=1tX8ytETkqM)
-- Video Entrega 2: *agregar el enlace*
+- [Video Entrega 2](https://www.youtube.com/watch?v=l0DcCole240)
 - Video Entrega 3: *agregar el enlace*
 
 ## Integrantes
