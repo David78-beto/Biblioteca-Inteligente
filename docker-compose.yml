@@ -4,11 +4,28 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,web
+      NODE_SERVICE_URL: http://microservicio:3000
+      NODE_PUBLIC_URL: http://localhost:3000
     ports:
       - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
+      microservicio:
+        condition: service_started
+
+  microservicio:
+    build: ./microservicio
+    environment:
+      PORT: "3000"
+      DJANGO_API_URL: http://web:8000
+      ORIGEN_WEB: http://localhost:8000
+      SERVICIO_TOKEN: ${SERVICIO_TOKEN}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash-lite}
+    ports:
+      - "3000:3000"
 
   db:
     image: postgres:17

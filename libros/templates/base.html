@@ -34,5 +34,9 @@
         {% endfor %}
         {% block contenido %}{% endblock %}
     </main>
+    <div id="avisos-vivo" class="avisos-vivo" aria-live="polite"></div>
+    {% if node_public_url %}
+        <script src="{% static 'libros/vivo.js' %}" data-servidor="{{ node_public_url }}" defer></script>
+    {% endif %}
 </body>
 </html>

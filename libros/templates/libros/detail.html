@@ -6,7 +6,7 @@
 <dl class="datos">
     <dt>Autor</dt><dd>{{ libro.autor }}</dd>
     <dt>Género</dt><dd>{{ libro.genero.nombre }}</dd>
-    <dt>Votos</dt><dd>{{ libro.votos }}</dd>
+    <dt>Votos</dt><dd data-votos-libro="{{ libro.id }}">{{ libro.votos }}</dd>
 </dl>
 {% if libro.descripcion %}<p class="descripcion">{{ libro.descripcion }}</p>{% endif %}
 <div class="acciones">
@@ -27,4 +27,11 @@
         <a class="boton peligro" href="{% url 'eliminar' libro.id %}">Eliminar</a>
     {% endif %}
 </div>
+{% if ia_disponible %}
+<section id="recomendaciones" class="recomendaciones" data-url="{% url 'recomendaciones' libro.id %}">
+    <h2>Te puede interesar</h2>
+    <p class="estado-ia" role="status">Buscando recomendaciones con IA…</p>
+    <ul class="tarjetas"></ul>
+</section>
+{% endif %}
 {% endblock %}

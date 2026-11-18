@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titulo %}Búsqueda{% endblock %}
+{% block contenido %}
+<a class="volver" href="{% url 'index' %}">← Géneros</a>
+<h1>Búsqueda con IA</h1>
+{% include "libros/_buscador.html" %}
+{% if error %}
+    <p class="aviso" role="alert">{{ error }}</p>
+{% elif resultados %}
+    <ul class="tarjetas">
+    {% for libro in resultados %}
+        <li><a class="tarjeta" href="{{ libro.url }}">
+            <strong>{{ libro.titulo }}</strong>
+            <span>{{ libro.autor }} · {{ libro.genero }}</span>
+            <span class="motivo">{{ libro.motivo }}</span>
+        </a></li>
+    {% endfor %}
+    </ul>
+{% elif consulta %}
+    <p>No encontramos libros para esa búsqueda.</p>
+{% endif %}
+{% endblock %}

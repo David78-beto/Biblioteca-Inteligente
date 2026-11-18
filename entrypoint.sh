@@ -8,4 +8,4 @@ if [ -n "$DJANGO_SUPERUSER_USERNAME" ]; then
     python manage.py createsuperuser --noinput || echo "El superusuario ya existe."
 fi
 
-exec gunicorn biblioteca.wsgi:application --bind "0.0.0.0:${PORT}" --workers 2
+exec gunicorn biblioteca.wsgi:application --bind "0.0.0.0:${PORT}" --workers 2 --threads 4 --timeout 120

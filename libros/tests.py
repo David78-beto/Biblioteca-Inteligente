@@ -1,8 +1,11 @@
+from unittest import mock
+
 from django.contrib.auth.models import Group, User
 from django.contrib.messages import get_messages
 from django.db.models import ProtectedError
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
+from . import servicios
 from .models import Genero, Libro, Voto
 from .roles import ADMINISTRADOR, BIBLIOTECARIO, LECTOR, rol_de
 
@@ -216,3 +219,89 @@ class AdminTests(BaseTestCase):
         Voto.objects.create(usuario=self.lector, libro=self.libro)
         self.client.force_login(self.admin)
         self.assertContains(self.client.get(reverse('admin:libros_voto_changelist')), 'lectora')
+
+
+class ApiTests(BaseTestCase):
+    def test_lista_el_catalogo_en_json(self):
+        Libro.objects.filter(pk=self.libro.pk).update(descripcion='Un conde.')
+        response = self.client.get(reverse('api_libros'))
+        self.assertEqual(response.status_code, 200)
+        libro = next(l for l in response.json()['libros'] if l['id'] == self.libro.pk)
+        self.assertEqual(libro, {
+            'id': self.libro.pk, 'titulo': 'Drácula', 'autor': 'Bram Stoker',
+            'genero': 'Terror', 'descripcion': 'Un conde.', 'votos': 0,
+        })
+
+    def test_detalle_de_un_libro(self):
+        response = self.client.get(reverse('api_libro', args=[self.otro.pk]))
+        self.assertEqual(response.json()['titulo'], 'El Hobbit')
+
+    def test_libro_inexistente_devuelve_404_en_json(self):
+        response = self.client.get(reverse('api_libro', args=[9999]))
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('error', response.json())
+
+    def test_la_api_solo_permite_lectura(self):
+        self.assertEqual(self.client.post(reverse('api_libros')).status_code, 405)
+
+
+@override_settings(NODE_SERVICE_URL='http://microservicio.test', NODE_PUBLIC_URL='http://publico.test')
+class IntegracionNodeTests(BaseTestCase):
+    def sugerencia(self, libro):
+        return {'id': libro.pk, 'titulo': libro.titulo, 'autor': libro.autor, 'genero': 'Fantasía', 'motivo': 'Parecido.'}
+
+    @mock.patch('libros.views.servicios.recomendar')
+    def test_recomendaciones_incluyen_el_enlace_y_descartan_inexistentes(self, recomendar):
+        recomendar.return_value = [self.sugerencia(self.otro), {**self.sugerencia(self.otro), 'id': 9999}]
+        response = self.client.get(reverse('recomendaciones', args=[self.libro.pk]))
+        datos = response.json()['recomendaciones']
+        self.assertEqual([r['id'] for r in datos], [self.otro.pk])
+        self.assertEqual(datos[0]['url'], reverse('detail', args=[self.otro.pk]))
+
+    @mock.patch('libros.views.servicios.recomendar', side_effect=servicios.ServicioNoDisponible)
+    def test_si_la_ia_falla_el_detalle_sigue_funcionando(self, recomendar):
+        self.assertEqual(self.client.get(reverse('detail', args=[self.libro.pk])).status_code, 200)
+        self.assertEqual(self.client.get(reverse('recomendaciones', args=[self.libro.pk])).status_code, 503)
+
+    @mock.patch('libros.views.servicios.buscar')
+    def test_busqueda_muestra_resultados_y_motivo(self, buscar):
+        buscar.return_value = [self.sugerencia(self.otro)]
+        response = self.client.get(reverse('buscar'), {'q': 'un viaje con un dragón'})
+        buscar.assert_called_once_with('un viaje con un dragón')
+        self.assertContains(response, 'El Hobbit')
+        self.assertContains(response, 'Parecido.')
+
+    @mock.patch('libros.views.servicios.buscar', side_effect=servicios.ServicioNoDisponible)
+    def test_busqueda_avisa_si_la_ia_falla(self, buscar):
+        response = self.client.get(reverse('buscar'), {'q': 'un libro de misterio'})
+        self.assertContains(response, 'no está disponible')
+
+    @mock.patch('libros.views.servicios.buscar')
+    def test_busqueda_corta_no_consulta_la_ia(self, buscar):
+        self.client.get(reverse('buscar'), {'q': 'ab'})
+        buscar.assert_not_called()
+
+    @mock.patch('libros.views.servicios.publicar_evento')
+    def test_votar_publica_el_evento_una_sola_vez(self, publicar):
+        self.client.force_login(self.lector)
+        url = reverse('votar', args=[self.libro.pk])
+        self.client.post(url)
+        self.client.post(url)
+        publicar.assert_called_once_with('/api/eventos/voto', {'libroId': self.libro.pk, 'titulo': 'Drácula', 'votos': 1})
+
+    @mock.patch('libros.views.servicios.publicar_evento')
+    def test_crear_libro_publica_el_evento(self, publicar):
+        self.client.force_login(self.bibliotecario)
+        self.client.post(reverse('crear'), {'titulo': 'It', 'autor': 'Stephen King', 'genero': self.terror.pk})
+        libro = Libro.objects.get(titulo='It')
+        publicar.assert_called_once_with('/api/eventos/libro', {'libroId': libro.pk, 'titulo': 'It', 'autor': 'Stephen King'})
+
+    @mock.patch('libros.servicios.urlopen', side_effect=TimeoutError)
+    def test_cliente_convierte_los_fallos_de_red(self, urlopen):
+        with self.assertRaises(servicios.ServicioNoDisponible):
+            servicios.recomendar(self.libro.pk)
+
+    @override_settings(NODE_SERVICE_URL='', NODE_PUBLIC_URL='')
+    def test_sin_microservicio_se_ocultan_las_funciones_de_ia(self):
+        self.assertNotContains(self.client.get(reverse('index')), 'Buscar con IA')
+        self.assertNotContains(self.client.get(reverse('detail', args=[self.libro.pk])), 'Te puede interesar')

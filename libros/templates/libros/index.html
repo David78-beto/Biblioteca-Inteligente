@@ -2,6 +2,7 @@
 {% block titulo %}Géneros{% endblock %}
 {% block contenido %}
 <h1>Géneros</h1>
+{% include "libros/_buscador.html" %}
 {% if lista_generos %}
     <ul class="tarjetas">
     {% for genero in lista_generos %}

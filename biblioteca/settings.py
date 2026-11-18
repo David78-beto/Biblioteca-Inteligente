@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'libros.context_processors.rol',
+                'libros.context_processors.microservicio',
             ],
         },
     },
@@ -157,6 +158,13 @@ STORAGES = {
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+
+
+# Node.js microservice
+
+NODE_SERVICE_URL = os.environ.get('NODE_SERVICE_URL', '').rstrip('/')
+NODE_PUBLIC_URL = os.environ.get('NODE_PUBLIC_URL', NODE_SERVICE_URL).rstrip('/')
+SERVICIO_TOKEN = os.environ.get('SERVICIO_TOKEN', '')
 
 
 # Email

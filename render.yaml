@@ -25,3 +25,30 @@ services:
         sync: false
       - key: DJANGO_SUPERUSER_PASSWORD
         sync: false
+      - key: NODE_SERVICE_URL
+        sync: false
+      - key: SERVICIO_TOKEN
+        fromService:
+          type: web
+          name: biblioteca-microservicio
+          envVarKey: SERVICIO_TOKEN
+
+  - type: web
+    name: biblioteca-microservicio
+    runtime: docker
+    plan: free
+    branch: main
+    dockerContext: ./microservicio
+    dockerfilePath: ./microservicio/Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: DJANGO_API_URL
+        value: https://biblioteca-inteligente-glj7.onrender.com
+      - key: ORIGEN_WEB
+        value: https://biblioteca-inteligente-glj7.onrender.com
+      - key: SERVICIO_TOKEN
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite

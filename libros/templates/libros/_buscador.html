@@ -1,0 +1,9 @@
+{% if ia_disponible %}
+<form class="buscador" action="{% url 'buscar' %}" method="get" role="search">
+    <label for="busqueda-ia">Busca con tus palabras</label>
+    <div class="buscador-fila">
+        <input id="busqueda-ia" name="q" type="search" maxlength="200" required minlength="3" value="{{ consulta|default:'' }}" placeholder="Ej.: historia sobre un planeta desértico">
+        <button class="boton" type="submit">Buscar con IA</button>
+    </div>
+</form>
+{% endif %}

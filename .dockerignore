@@ -6,3 +6,5 @@ db.sqlite3
 staticfiles
 .env
 docs
+microservicio
+node_modules

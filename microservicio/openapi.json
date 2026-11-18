@@ -1,0 +1,261 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API del microservicio de Biblioteca Inteligente",
+    "version": "1.0.0",
+    "description": "Microservicio en Node.js que recomienda libros y resuelve búsquedas en lenguaje natural con IA generativa (Google Gemini), y que retransmite en tiempo real los eventos que publica Django mediante Socket.IO (`voto:actualizado` y `libro:nuevo`)."
+  },
+  "servers": [{ "url": "/", "description": "Este servidor" }],
+  "tags": [
+    { "name": "Estado", "description": "Salud del microservicio" },
+    { "name": "IA generativa", "description": "Recomendaciones y búsqueda con Gemini" },
+    { "name": "Eventos", "description": "Comunicación Django → Node.js. Requieren el token de servicio" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["Estado"],
+        "summary": "Consulta el estado del microservicio",
+        "responses": {
+          "200": {
+            "description": "El microservicio está en línea",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Salud" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recomendaciones": {
+      "post": {
+        "tags": ["IA generativa"],
+        "summary": "Recomienda libros parecidos a uno del catálogo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PeticionRecomendacion" },
+              "example": { "libroId": 6, "limite": 3 }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Libros recomendados",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RespuestaRecomendacion" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error" },
+          "404": { "$ref": "#/components/responses/Error" },
+          "429": { "$ref": "#/components/responses/Error" },
+          "502": { "$ref": "#/components/responses/Error" },
+          "503": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    },
+    "/api/busqueda": {
+      "post": {
+        "tags": ["IA generativa"],
+        "summary": "Busca libros con una frase en lenguaje natural",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PeticionBusqueda" },
+              "example": { "consulta": "historia sobre un planeta desértico", "limite": 3 }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Libros encontrados",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RespuestaBusqueda" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error" },
+          "429": { "$ref": "#/components/responses/Error" },
+          "502": { "$ref": "#/components/responses/Error" },
+          "503": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    },
+    "/api/eventos/voto": {
+      "post": {
+        "tags": ["Eventos"],
+        "summary": "Publica un voto nuevo y lo emite por Socket.IO",
+        "security": [{ "TokenServicio": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EventoVoto" },
+              "example": { "libroId": 6, "titulo": "Dune", "votos": 4 }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Evento emitido a los navegadores conectados",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EventoEmitido" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error" },
+          "401": { "$ref": "#/components/responses/Error" },
+          "503": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    },
+    "/api/eventos/libro": {
+      "post": {
+        "tags": ["Eventos"],
+        "summary": "Publica un libro nuevo y lo emite por Socket.IO",
+        "security": [{ "TokenServicio": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EventoLibro" },
+              "example": { "libroId": 15, "titulo": "Neuromante", "autor": "William Gibson" }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Evento emitido a los navegadores conectados",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EventoEmitido" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error" },
+          "401": { "$ref": "#/components/responses/Error" },
+          "503": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "TokenServicio": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Servicio-Token",
+        "description": "Token compartido entre Django y el microservicio"
+      }
+    },
+    "responses": {
+      "Error": {
+        "description": "La petición no se pudo completar",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Salud": {
+        "type": "object",
+        "required": ["estado", "ia"],
+        "properties": {
+          "estado": { "type": "string", "example": "ok" },
+          "ia": { "type": "boolean", "description": "Indica si la IA generativa está configurada" }
+        }
+      },
+      "PeticionRecomendacion": {
+        "type": "object",
+        "required": ["libroId"],
+        "properties": {
+          "libroId": { "type": "integer", "minimum": 1 },
+          "limite": { "type": "integer", "minimum": 1, "maximum": 5, "default": 3 }
+        }
+      },
+      "PeticionBusqueda": {
+        "type": "object",
+        "required": ["consulta"],
+        "properties": {
+          "consulta": { "type": "string", "minLength": 3, "maxLength": 200 },
+          "limite": { "type": "integer", "minimum": 1, "maximum": 5, "default": 3 }
+        }
+      },
+      "LibroSugerido": {
+        "type": "object",
+        "required": ["id", "titulo", "autor", "genero", "motivo"],
+        "properties": {
+          "id": { "type": "integer" },
+          "titulo": { "type": "string" },
+          "autor": { "type": "string" },
+          "genero": { "type": "string" },
+          "motivo": { "type": "string", "description": "Explicación generada por la IA" }
+        }
+      },
+      "RespuestaRecomendacion": {
+        "type": "object",
+        "required": ["libroId", "recomendaciones"],
+        "properties": {
+          "libroId": { "type": "integer" },
+          "recomendaciones": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/LibroSugerido" }
+          }
+        }
+      },
+      "RespuestaBusqueda": {
+        "type": "object",
+        "required": ["consulta", "resultados"],
+        "properties": {
+          "consulta": { "type": "string" },
+          "resultados": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/LibroSugerido" }
+          }
+        }
+      },
+      "EventoVoto": {
+        "type": "object",
+        "required": ["libroId", "titulo", "votos"],
+        "properties": {
+          "libroId": { "type": "integer", "minimum": 1 },
+          "titulo": { "type": "string", "maxLength": 200 },
+          "votos": { "type": "integer", "minimum": 1 }
+        }
+      },
+      "EventoLibro": {
+        "type": "object",
+        "required": ["libroId", "titulo", "autor"],
+        "properties": {
+          "libroId": { "type": "integer", "minimum": 1 },
+          "titulo": { "type": "string", "maxLength": 200 },
+          "autor": { "type": "string", "maxLength": 200 }
+        }
+      },
+      "EventoEmitido": {
+        "type": "object",
+        "required": ["emitido", "evento"],
+        "properties": {
+          "emitido": { "type": "string", "example": "voto:actualizado" },
+          "evento": { "type": "object" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": { "type": "string" }
+        }
+      }
+    }
+  }
+}
