@@ -20,7 +20,7 @@ Proyecto de la asignatura Electiva V. Estado: Entrega 3, integración de microse
 | Recomendaciones y búsqueda con Google Gemini | Construido |
 | Votos y avisos en tiempo real | Construido |
 | Docker Compose con Django, Node.js y PostgreSQL | Construido |
-| 58 pruebas automatizadas con GitHub Actions | Construido |
+| 62 pruebas automatizadas con GitHub Actions | Construido |
 
 ## Pendiente para ExpoUninpahu
 
