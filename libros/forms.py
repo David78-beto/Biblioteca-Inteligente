@@ -7,7 +7,7 @@ from .models import Libro
 class LibroForm(forms.ModelForm):
     class Meta:
         model = Libro
-        fields = ['titulo', 'autor', 'genero', 'descripcion']
+        fields = ['titulo', 'autor', 'genero', 'descripcion', 'enlace_lectura', 'dominio_publico']
         widgets = {'descripcion': forms.Textarea(attrs={'rows': 4})}
 
     def __init__(self, *args, **kwargs):

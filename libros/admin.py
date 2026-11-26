@@ -9,8 +9,8 @@ class GeneroAdmin(admin.ModelAdmin):
 
 @admin.register(Libro)
 class LibroAdmin(admin.ModelAdmin):
-    list_display = ['titulo', 'autor', 'genero', 'votos']
-    list_filter = ['genero']
+    list_display = ['titulo', 'autor', 'genero', 'votos', 'dominio_publico']
+    list_filter = ['genero', 'dominio_publico']
     search_fields = ['titulo', 'autor', 'descripcion']
 
 

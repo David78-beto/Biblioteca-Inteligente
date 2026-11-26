@@ -128,3 +128,6 @@ main.contenedor { padding-top: 24px; padding-bottom: 48px; }
 
 .avisos-vivo { position: fixed; right: 16px; bottom: 16px; left: 16px; display: grid; justify-items: end; gap: 8px; pointer-events: none; }
 .aviso-vivo { max-width: 360px; margin: 0; padding: 12px 16px; border: 1px solid var(--borde); border-radius: 8px; background: var(--superficie); box-shadow: 0 4px 12px rgb(0 0 0 / 0.15); }
+
+.lectura { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 24px; }
+.lectura span { color: var(--tenue); font-size: 0.9rem; }

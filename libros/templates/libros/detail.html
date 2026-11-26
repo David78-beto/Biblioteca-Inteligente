@@ -9,6 +9,14 @@
     <dt>Votos</dt><dd data-votos-libro="{{ libro.id }}">{{ libro.votos }}</dd>
 </dl>
 {% if libro.descripcion %}<p class="descripcion">{{ libro.descripcion }}</p>{% endif %}
+{% if libro.enlace_lectura %}
+<p class="lectura">
+    <a class="boton secundario" href="{{ libro.enlace_lectura }}" target="_blank" rel="noopener noreferrer">
+        {% if libro.dominio_publico %}Leer en línea{% else %}Dónde conseguirlo{% endif %} ↗
+    </a>
+    <span>{% if libro.dominio_publico %}Obra de dominio público; se abre una copia legal en otra pestaña.{% else %}Obra con derechos de autor; se abre su ficha en una biblioteca en otra pestaña.{% endif %}</span>
+</p>
+{% endif %}
 <div class="acciones">
     {% if not user.is_authenticated %}
         <a class="boton" href="{% url 'login' %}?next={{ request.path|urlencode }}">Inicia sesión para votar</a>

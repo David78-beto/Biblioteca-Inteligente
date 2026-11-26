@@ -19,6 +19,16 @@ class Libro(models.Model):
     autor = models.CharField('autor', max_length=200)
     genero = models.ForeignKey(Genero, on_delete=models.PROTECT, verbose_name='género')
     descripcion = models.TextField('descripción', blank=True)
+    enlace_lectura = models.URLField(
+        'enlace de lectura',
+        blank=True,
+        help_text='Copia legal en línea o ficha donde conseguir el libro. Nunca enlaces copias no autorizadas.',
+    )
+    dominio_publico = models.BooleanField(
+        'es de dominio público',
+        default=False,
+        help_text='Márcalo solo si el enlace lleva a la obra completa, gratuita y legal.',
+    )
     votos = models.PositiveIntegerField('votos', default=0)
 
     class Meta:

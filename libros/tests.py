@@ -305,3 +305,39 @@ class IntegracionNodeTests(BaseTestCase):
     def test_sin_microservicio_se_ocultan_las_funciones_de_ia(self):
         self.assertNotContains(self.client.get(reverse('index')), 'Buscar con IA')
         self.assertNotContains(self.client.get(reverse('detail', args=[self.libro.pk])), 'Te puede interesar')
+
+
+class LecturaEnLineaTests(BaseTestCase):
+    def test_dominio_publico_muestra_leer_en_linea(self):
+        Libro.objects.filter(pk=self.libro.pk).update(
+            enlace_lectura='https://www.gutenberg.org/ebooks/345', dominio_publico=True)
+        response = self.client.get(reverse('detail', args=[self.libro.pk]))
+        self.assertContains(response, 'Leer en línea')
+        self.assertContains(response, 'href="https://www.gutenberg.org/ebooks/345" target="_blank" rel="noopener noreferrer"')
+
+    def test_obra_con_derechos_muestra_donde_conseguirlo(self):
+        Libro.objects.filter(pk=self.otro.pk).update(enlace_lectura='https://openlibrary.org/works/OL27482W')
+        response = self.client.get(reverse('detail', args=[self.otro.pk]))
+        self.assertContains(response, 'Dónde conseguirlo')
+        self.assertNotContains(response, 'Leer en línea')
+
+    def test_sin_enlace_no_hay_boton(self):
+        response = self.client.get(reverse('detail', args=[self.libro.pk]))
+        self.assertNotContains(response, 'Leer en línea')
+        self.assertNotContains(response, 'Dónde conseguirlo')
+
+    def test_bibliotecario_registra_el_enlace(self):
+        self.client.force_login(self.bibliotecario)
+        datos = {'titulo': 'Drácula', 'autor': 'Bram Stoker', 'genero': self.terror.pk,
+                 'enlace_lectura': 'https://www.gutenberg.org/ebooks/345', 'dominio_publico': 'on'}
+        self.client.post(reverse('editar', args=[self.libro.pk]), datos)
+        self.libro.refresh_from_db()
+        self.assertEqual(self.libro.enlace_lectura, 'https://www.gutenberg.org/ebooks/345')
+        self.assertTrue(self.libro.dominio_publico)
+
+    def test_rechaza_un_enlace_invalido(self):
+        self.client.force_login(self.bibliotecario)
+        datos = {'titulo': 'Drácula', 'autor': 'Bram Stoker', 'genero': self.terror.pk,
+                 'enlace_lectura': 'no es un enlace'}
+        response = self.client.post(reverse('editar', args=[self.libro.pk]), datos)
+        self.assertTrue(response.context['form'].errors['enlace_lectura'])
