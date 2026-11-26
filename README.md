@@ -2,11 +2,20 @@
 
 Catálogo web de una biblioteca con usuarios, roles, votos en tiempo real, recomendaciones y búsqueda en lenguaje natural con inteligencia artificial generativa.
 
-Proyecto de la asignatura Electiva V. Estado: Entrega 3, integración de microservicios e IA.
+Proyecto de la asignatura Electiva V. Estado: entrega definitiva para ExpoUninpahu.
 
-- **Aplicación publicada:** <https://biblioteca-inteligente-glj7.onrender.com>
-- **Microservicio:** <https://biblioteca-microservicio-idfw.onrender.com>
-- **Swagger:** <https://biblioteca-microservicio-idfw.onrender.com/docs/>
+## Enlaces
+
+| Recurso | Enlace |
+| --- | --- |
+| Aplicación (Django) | <https://biblioteca-inteligente-glj7.onrender.com> |
+| Panel de administración | <https://biblioteca-inteligente-glj7.onrender.com/admin/> |
+| API REST del catálogo | <https://biblioteca-inteligente-glj7.onrender.com/api/libros/> |
+| Microservicio (Node.js) | <https://biblioteca-microservicio-idfw.onrender.com> |
+| Swagger | <https://biblioteca-microservicio-idfw.onrender.com/docs/> |
+| Documento OpenAPI | <https://biblioteca-microservicio-idfw.onrender.com/openapi.json> |
+
+Los servicios usan el plan gratuito de Render: la primera visita después de un rato sin uso puede tardar hasta un minuto.
 
 ## Estado actual
 
@@ -20,11 +29,15 @@ Proyecto de la asignatura Electiva V. Estado: Entrega 3, integración de microse
 | Recomendaciones y búsqueda con Google Gemini | Construido |
 | Votos y avisos en tiempo real | Construido |
 | Docker Compose con Django, Node.js y PostgreSQL | Construido |
-| 62 pruebas automatizadas con GitHub Actions | Construido |
+| Lectura en línea con enlaces legales | Construido |
+| 67 pruebas automatizadas con GitHub Actions | Construido |
 
-## Pendiente para ExpoUninpahu
+## Lectura en línea
 
-- **Lectura en línea (RF-18):** desde cada libro se podrá abrir una copia legal cuando la obra sea de dominio público, o ver dónde conseguirla si tiene derechos de autor. El sistema no alojará archivos PDF.
+Cada libro tiene un botón que se abre en otra pestaña. El sistema no aloja archivos y solo enlaza fuentes legales:
+
+- **Leer en línea:** obras de dominio público, en Wikisource o Standard Ebooks.
+- **Dónde conseguirlo:** obras con derechos de autor, con su búsqueda en WorldCat, el catálogo mundial de bibliotecas.
 
 ## Roles
 
